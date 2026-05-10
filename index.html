@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jardín Secreto · Día de la Madre 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1a2e1a;
+    --forest-mid: #2d4a2d;
+    --leaf: #3d6b3d;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f5edd8;
+    --rose: #c4736a;
+    --shadow: rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 20% 0%, #2a4a1a 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, #1a2a3a 0%, transparent 50%),
+      linear-gradient(160deg, #0f1f0f 0%, #1a2e20 40%, #0d1a2a 100%);
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* Partículas flotantes */
+  .particle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    animation: float-particle linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .particle:nth-child(1)  { left: 10%; animation-duration: 18s; animation-delay: 0s;   width: 3px; height: 3px; }
+  .particle:nth-child(2)  { left: 25%; animation-duration: 22s; animation-delay: 3s;   background: #a8d5a8; }
+  .particle:nth-child(3)  { left: 40%; animation-duration: 15s; animation-delay: 7s;   width: 2px; height: 2px; }
+  .particle:nth-child(4)  { left: 60%; animation-duration: 20s; animation-delay: 1s;   background: var(--rose); }
+  .particle:nth-child(5)  { left: 75%; animation-duration: 25s; animation-delay: 5s;   width: 5px; height: 5px; }
+  .particle:nth-child(6)  { left: 88%; animation-duration: 17s; animation-delay: 9s;   background: #a8d5a8; }
+  .particle:nth-child(7)  { left: 33%; animation-duration: 21s; animation-delay: 12s; }
+  .particle:nth-child(8)  { left: 55%; animation-duration: 19s; animation-delay: 6s;   background: var(--gold-light); width: 2px; height: 2px; }
+
+  @keyframes float-particle {
+    0%   { transform: translateY(110vh) translateX(0); opacity: 0; }
+    5%   { opacity: 0.7; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(-20px) translateX(30px); opacity: 0; }
+  }
+
+  /* Marco de enredadera en esquinas */
+  .vine-corner {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .vine-corner.tl { top: 0; left: 0; }
+  .vine-corner.tr { top: 0; right: 0; transform: scaleX(-1); }
+  .vine-corner.bl { bottom: 0; left: 0; transform: scaleY(-1); }
+  .vine-corner.br { bottom: 0; right: 0; transform: scale(-1); }
+  .vine-corner svg { width: 100%; height: 100%; }
+
+  /* Contenedor principal */
+  .container {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 60px 36px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Flor central SVG */
+  .flower-crown {
+    text-align: center;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: reveal 1.4s ease-out 0.3s forwards;
+  }
+  .flower-crown svg {
+    width: 120px;
+    height: 80px;
+    overflow: visible;
+  }
+
+  /* Etiqueta de fecha */
+  .date-tag {
+    text-align: center;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: reveal 1s ease-out 0.8s forwards;
+  }
+
+  /* Título principal */
+  .hero-title {
+    text-align: center;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: reveal 1.2s ease-out 1s forwards;
+  }
+  .hero-title .para {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(245, 237, 216, 0.7);
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+  }
+  .hero-title .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(201, 168, 76, 0.4);
+  }
+
+  /* Divisor dorado */
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 28px 0;
+    opacity: 0;
+    animation: reveal 1s ease-out 1.4s forwards;
+  }
+  .gold-divider::before,
+  .gold-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .gold-divider span {
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  /* Carta */
+  .letter-card {
+    background: linear-gradient(135deg, rgba(45, 74, 45, 0.3) 0%, rgba(26, 46, 26, 0.5) 100%);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 2px;
+    padding: 36px 32px;
+    margin-bottom: 32px;
+    position: relative;
+    opacity: 0;
+    animation: reveal 1.2s ease-out 1.6s forwards;
+    backdrop-filter: blur(4px);
+  }
+  .letter-card::before {
+    content: '\201C';
+    position: absolute;
+    top: -18px;
+    left: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: var(--gold);
+    opacity: 0.4;
+    line-height: 1;
+  }
+
+  .letter-p {
+    font-size: 17px;
+    line-height: 1.9;
+    color: rgba(245, 237, 216, 0.88);
+    margin-bottom: 18px;
+  }
+  .letter-p:last-child { margin-bottom: 0; }
+  .letter-p em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  /* Marco de foto */
+  .photo-frame {
+    text-align: center;
+    margin: 0 0 32px;
+    opacity: 0;
+    animation: reveal 1.2s ease-out 1.5s forwards;
+  }
+  .photo-ring {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    box-shadow:
+      0 0 18px rgba(201,168,76,0.25),
+      inset 0 0 20px rgba(26,46,26,0.6);
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(45,74,45,0.7), rgba(26,46,26,0.8));
+    position: relative;
+  }
+  .photo-ring img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+  .photo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: rgba(245,237,216,0.4);
+    text-align: center;
+  }
+  .photo-placeholder svg { width: 36px; height: 36px; }
+  .photo-placeholder span { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-family: 'EB Garamond', serif; }
+  .photo-label {
+    display: block;
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  /* Firma */
+  .signature-block {
+    text-align: right;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(201, 168, 76, 0.15);
+  }
+  .sig-label {
+    font-style: italic;
+    font-size: 15px;
+    color: rgba(245, 237, 216, 0.6);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .sig-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  /* Flores decorativas inferiores */
+  .bottom-flora {
+    text-align: center;
+    margin: 24px 0;
+    opacity: 0;
+    animation: reveal 1s ease-out 2.2s forwards;
+  }
+  .flora-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  .flora-row svg {
+    width: 36px;
+    height: 36px;
+    opacity: 0.7;
+  }
+
+  /* Mensaje final */
+  .closing {
+    text-align: center;
+    opacity: 0;
+    animation: reveal 1s ease-out 2.5s forwards;
+  }
+  .closing-main {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .closing-sub {
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .closing-heart {
+    font-size: 28px;
+    color: var(--rose);
+    margin-top: 14px;
+    display: block;
+    animation: heartbeat 1.8s ease-in-out infinite;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 50px;
+    opacity: 0;
+    animation: reveal 1s ease-out 3s forwards;
+  }
+  .footer-line {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 12px;
+    opacity: 0.3;
+  }
+  .footer-text {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(245, 237, 216, 0.35);
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(201, 168, 76, 0.5);
+    margin-top: 4px;
+  }
+
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14%       { transform: scale(1.2); }
+    28%       { transform: scale(1); }
+    42%       { transform: scale(1.15); }
+    56%       { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Partículas -->
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+
+<!-- Enredaderas en esquinas -->
+<div class="vine-corner tl">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 Q60,0 60,60 Q60,120 120,120" stroke="#3d6b3d" stroke-width="1.5" fill="none"/>
+    <path d="M0,0 Q30,0 30,30 Q30,80 80,80" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
+    <circle cx="60" cy="60" r="8" fill="#c4736a" opacity="0.5"/>
+    <circle cx="60" cy="60" r="4" fill="#c4736a" opacity="0.8"/>
+    <circle cx="30" cy="30" r="5" fill="#3d6b3d" opacity="0.6"/>
+    <path d="M45,45 Q55,35 65,45 Q55,55 45,45Z" fill="#3d6b3d" opacity="0.7"/>
+    <path d="M70,80 Q80,70 90,80 Q80,90 70,80Z" fill="#2d4a2d" opacity="0.7"/>
+    <path d="M100,60 Q110,50 120,60 Q110,70 100,60Z" fill="#3d6b3d" opacity="0.5"/>
+  </svg>
+</div>
+<div class="vine-corner tr">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 Q60,0 60,60 Q60,120 120,120" stroke="#3d6b3d" stroke-width="1.5" fill="none"/>
+    <path d="M0,0 Q30,0 30,30 Q30,80 80,80" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
+    <circle cx="60" cy="60" r="8" fill="#c4736a" opacity="0.5"/>
+    <circle cx="60" cy="60" r="4" fill="#c4736a" opacity="0.8"/>
+    <path d="M45,45 Q55,35 65,45 Q55,55 45,45Z" fill="#3d6b3d" opacity="0.7"/>
+    <path d="M70,80 Q80,70 90,80 Q80,90 70,80Z" fill="#2d4a2d" opacity="0.7"/>
+  </svg>
+</div>
+<div class="vine-corner bl">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 Q60,0 60,60 Q60,120 120,120" stroke="#3d6b3d" stroke-width="1.5" fill="none"/>
+    <circle cx="60" cy="60" r="8" fill="#c4736a" opacity="0.5"/>
+    <path d="M45,45 Q55,35 65,45 Q55,55 45,45Z" fill="#3d6b3d" opacity="0.7"/>
+  </svg>
+</div>
+<div class="vine-corner br">
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 Q60,0 60,60 Q60,120 120,120" stroke="#3d6b3d" stroke-width="1.5" fill="none"/>
+    <circle cx="60" cy="60" r="8" fill="#c4736a" opacity="0.5"/>
+    <path d="M45,45 Q55,35 65,45 Q55,55 45,45Z" fill="#3d6b3d" opacity="0.7"/>
+  </svg>
+</div>
+
+<div class="container">
+
+  <!-- Corona floral -->
+  <div class="flower-crown">
+    <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Rosa central grande -->
+      <g transform="translate(100,55)">
+        <circle cx="0" cy="0" r="14" fill="#c4736a" opacity="0.9"/>
+        <circle cx="0" cy="0" r="8"  fill="#a85a52"/>
+        <ellipse cx="-16" cy="0"  rx="10" ry="6" fill="#c4736a" opacity="0.7" transform="rotate(-20)"/>
+        <ellipse cx="16"  cy="0"  rx="10" ry="6" fill="#c4736a" opacity="0.7" transform="rotate(20)"/>
+        <ellipse cx="0"  cy="-16" rx="6" ry="10" fill="#d4856e" opacity="0.7"/>
+        <ellipse cx="0"  cy="16"  rx="6" ry="10" fill="#c4736a" opacity="0.6"/>
+        <ellipse cx="-11" cy="-11" rx="8" ry="5" fill="#d4856e" opacity="0.6" transform="rotate(-45)"/>
+        <ellipse cx="11"  cy="-11" rx="8" ry="5" fill="#d4856e" opacity="0.6" transform="rotate(45)"/>
+      </g>
+      <!-- Hojas -->
+      <path d="M60,60 Q70,40 85,55 Q75,65 60,60Z" fill="#3d6b3d" opacity="0.8"/>
+      <path d="M140,60 Q130,40 115,55 Q125,65 140,60Z" fill="#3d6b3d" opacity="0.8"/>
+      <path d="M72,70 Q65,50 80,60Z" fill="#2d4a2d" opacity="0.9"/>
+      <path d="M128,70 Q135,50 120,60Z" fill="#2d4a2d" opacity="0.9"/>
+      <!-- Flores pequeñas -->
+      <g transform="translate(62,52)">
+        <circle cx="0" cy="0" r="7" fill="#c9a84c" opacity="0.8"/>
+        <circle cx="0" cy="0" r="3" fill="#e8c97a"/>
+        <ellipse cx="-8" cy="0" rx="5" ry="3" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="8" cy="0" rx="5" ry="3" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="0" cy="-8" rx="3" ry="5" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="0" cy="8" rx="3" ry="5" fill="#c9a84c" opacity="0.5"/>
+      </g>
+      <g transform="translate(138,52)">
+        <circle cx="0" cy="0" r="7" fill="#c9a84c" opacity="0.8"/>
+        <circle cx="0" cy="0" r="3" fill="#e8c97a"/>
+        <ellipse cx="-8" cy="0" rx="5" ry="3" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="8" cy="0" rx="5" ry="3" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="0" cy="-8" rx="3" ry="5" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="0" cy="8" rx="3" ry="5" fill="#c9a84c" opacity="0.5"/>
+      </g>
+      <!-- Tallos -->
+      <path d="M100,70 Q100,85 100,95" stroke="#2d4a2d" stroke-width="2" fill="none"/>
+      <path d="M62,60 Q75,75 100,70" stroke="#2d4a2d" stroke-width="1.5" fill="none"/>
+      <path d="M138,60 Q125,75 100,70" stroke="#2d4a2d" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- Fecha -->
+  <div class="date-tag">Día de la Madre · 2026</div>
+
+  <!-- Título -->
+  <div class="hero-title">
+    <div class="para">Un jardín de amor</div>
+    <div class="name">Para Jenny Garcia</div>
+  </div>
+
+  <!-- Divisor -->
+  <div class="gold-divider"><span>✦</span></div>
+
+  <!-- Foto -->
+  <div class="photo-frame">
+    <div class="photo-ring">
+      <div class="photo-placeholder">
+        <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M4,32 Q4,24 18,24 Q32,24 32,32" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+      </div>
+    </div>
+    <span class="photo-label">Mi mamá hermosa</span>
+  </div>
+
+  <!-- Carta -->
+  <div class="letter-card">
+    <p class="letter-p">
+      Mamá, hay amor que no necesita palabras para crecer. Como un jardín que florece en silencio,
+      el tuyo ha estado ahí en cada estación de mi vida: en los inviernos difíciles y en
+      las primaveras llenas de luz.
+    </p>
+    <p class="letter-p">
+      Me enseñaste que el amor verdadero se planta con paciencia, se riega con sacrificio
+      y florece con el tiempo. <em>Tú eres ese jardín secreto en donde siempre encuentro paz.</em>
+    </p>
+    <p class="letter-p">
+      Gracias por cada abrazo que fue raíz, por cada palabra que fue semilla,
+      por cada acto tuyo que se convirtió en flor dentro de mí.
+    </p>
+
+    <div class="signature-block">
+      <span class="sig-label">Con todo mi amor,</span>
+      <div class="sig-name">Roberto</div>
+    </div>
+  </div>
+
+  <!-- Flora decorativa -->
+  <div class="bottom-flora">
+    <div class="flora-row">
+      <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="5" fill="#c4736a" opacity="0.9"/>
+        <ellipse cx="7"  cy="18" rx="6" ry="4" fill="#c4736a" opacity="0.6"/>
+        <ellipse cx="29" cy="18" rx="6" ry="4" fill="#c4736a" opacity="0.6"/>
+        <ellipse cx="18" cy="7"  rx="4" ry="6" fill="#d4856e" opacity="0.6"/>
+        <ellipse cx="18" cy="29" rx="4" ry="6" fill="#c4736a" opacity="0.5"/>
+      </svg>
+      <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4,18 Q18,2 32,18 Q18,34 4,18Z" fill="#3d6b3d" opacity="0.7"/>
+        <path d="M18,4 Q32,18 18,32" stroke="#2d4a2d" stroke-width="1" fill="none"/>
+      </svg>
+      <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="6" fill="#c9a84c" opacity="0.9"/>
+        <circle cx="18" cy="18" r="3" fill="#e8c97a"/>
+        <ellipse cx="7"  cy="18" rx="7" ry="4" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="29" cy="18" rx="7" ry="4" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="18" cy="7"  rx="4" ry="7" fill="#c9a84c" opacity="0.6"/>
+        <ellipse cx="18" cy="29" rx="4" ry="7" fill="#c9a84c" opacity="0.5"/>
+      </svg>
+      <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4,18 Q18,2 32,18 Q18,34 4,18Z" fill="#3d6b3d" opacity="0.7"/>
+        <path d="M18,4 Q32,18 18,32" stroke="#2d4a2d" stroke-width="1" fill="none"/>
+      </svg>
+      <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="5" fill="#c4736a" opacity="0.9"/>
+        <ellipse cx="7"  cy="18" rx="6" ry="4" fill="#c4736a" opacity="0.6"/>
+        <ellipse cx="29" cy="18" rx="6" ry="4" fill="#c4736a" opacity="0.6"/>
+        <ellipse cx="18" cy="7"  rx="4" ry="6" fill="#d4856e" opacity="0.6"/>
+        <ellipse cx="18" cy="29" rx="4" ry="6" fill="#c4736a" opacity="0.5"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Cierre -->
+  <div class="closing">
+    <div class="closing-main">Feliz Día de la Madre</div>
+    <div class="closing-sub">Mi amor eterno · 2026</div>
+    <span class="closing-heart">♥</span>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-line"></div>
+    <div class="footer-text">Una postal hecha con amor en</div>
+    <div class="footer-brand">Postales para Mamá</div>
+  </div>
+
+</div>
+
+<!-- ── POSTALES PARA MAMÁ: INTERACTIVIDAD ── -->
+<style>
+body{padding-top:52px}
+#hgBack{position:fixed;top:0;left:0;right:0;z-index:99999;padding:12px 20px;background:rgba(5,12,5,0.95);border-bottom:1px solid rgba(201,168,76,0.2);color:#e8c97a;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:1.5px;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:.2s;display:flex;align-items:center;gap:8px}
+#hgBack:hover{opacity:.85}
+#hgBack::after{content:'✏️  Toca los textos para personalizarlos';margin-left:auto;font-size:11px;letter-spacing:1px;opacity:.7;font-style:italic}
+.hg-ed{outline:none;border-radius:2px;transition:background .2s;border-bottom:1.5px dashed rgba(201,168,76,0.35)!important}
+.hg-ed:hover{background:rgba(45,74,45,0.12)}
+.hg-ed:focus{background:rgba(45,74,45,0.22)}
+#hgHint{display:none}
+.hg-wrap{max-width:520px;margin:44px auto 0;padding:0 36px 80px;position:relative;z-index:2}
+.hg-sep{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.hg-sep::before,.hg-sep::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.35),transparent)}
+.hg-sep span{font-family:'EB Garamond',serif;font-style:italic;font-size:15px;color:#c9a84c;letter-spacing:2px;white-space:nowrap}
+.hg-fields{display:flex;flex-direction:column;gap:13px}
+.hg-lbl{display:block;font-family:'EB Garamond',serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,237,216,0.5);margin-bottom:3px}
+.hg-inp,.hg-ta{width:100%;padding:10px 13px;background:rgba(45,74,45,0.22);border:1px solid rgba(201,168,76,0.22);border-radius:2px;color:#f5edd8;font-family:'EB Garamond',serif;font-size:15px;outline:none;transition:border-color .2s;box-sizing:border-box}
+.hg-inp::placeholder,.hg-ta::placeholder{color:rgba(245,237,216,0.28)}
+.hg-inp:focus,.hg-ta:focus{border-color:rgba(201,168,76,0.55)}
+.hg-ta{resize:vertical;min-height:75px}
+.hg-btn{width:100%;padding:13px;background:#c4736a;border:none;border-radius:2px;color:#f5edd8;font-family:'EB Garamond',serif;font-size:15px;letter-spacing:1.5px;cursor:pointer;transition:opacity .2s;margin-top:4px}
+.hg-btn:hover{opacity:.88}
+.hg-btn:disabled{opacity:.45;cursor:default}
+#hgOk{display:none;text-align:center;padding:28px 16px;background:rgba(45,74,45,0.28);border:1px solid rgba(201,168,76,0.2);border-radius:2px}
+.hg-ok-icon{font-size:34px;margin-bottom:10px}
+.hg-ok-t{font-family:'Playfair Display',serif;font-size:20px;color:#e8c97a;margin-bottom:6px}
+.hg-ok-s{font-size:14px;color:rgba(245,237,216,0.55)}
+</style>
+
+<button id="hgBack">← Volver</button>
+<div id="hgHint">✏️ Toca cualquier texto para personalizar</div>
+
+<script>
+(function(){
+  var TK='8627840294:AAFQw-uS72llUJhm9UAU6_caOWjeoCYB4Sw',TC='1832403276';
+  var FIELDS=[
+    {s:'.date-tag',l:'Fecha'},
+    {s:'.hero-title .name',l:'Para'},
+    {s:'.letter-p',l:'Mensaje'},
+    {s:'.sig-name',l:'Firma'}
+  ];
+  FIELDS.forEach(function(f){
+    var els=document.querySelectorAll(f.s);
+    els.forEach(function(el,i){
+      el.contentEditable='true';el.spellcheck=false;el.style.cursor='text';
+      el.classList.add('hg-ed');el.dataset.l=els.length>1?f.l+' '+(i+1):f.l;
+    });
+  });
+  var hint=document.getElementById('hgHint'),hs=false,ht;
+  document.querySelectorAll('.hg-ed').forEach(function(el){
+    el.addEventListener('focus',function(){
+      if(hs)return;hs=true;hint.classList.add('on');
+      ht=setTimeout(function(){hint.classList.remove('on');},3500);
+    });
+  });
+  document.getElementById('hgBack').onclick=function(){
+    window.history.length>1?window.history.back():window.location.assign('../../ia/golden-eggs-portfolio/index.html#cards');
+  };
+  ['hgN','hgC'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){this.style.borderColor='';});});
+  document.getElementById('hgBtn').addEventListener('click',async function(){
+    var n=document.getElementById('hgN').value.trim(),c=document.getElementById('hgC').value.trim();
+    if(!n||!c){if(!n)document.getElementById('hgN').style.borderColor='#e87090';if(!c)document.getElementById('hgC').style.borderColor='#e87090';return;}
+    var parts=[];
+    document.querySelectorAll('.hg-ed').forEach(function(el){parts.push('• '+el.dataset.l+': '+el.textContent.trim().slice(0,250));});
+    var x=document.getElementById('hgX').value.trim();
+    var txt='🌸 Nueva solicitud de carta\n\n📋 Plantilla: '+document.title+'\n👤 Cliente: '+n+'\n📱 Contacto: '+c+'\n\n✏️ Personalización:\n'+parts.join('\n')+(x?'\n\n📝 Nota: '+x:'');
+    this.disabled=true;this.textContent='Enviando...';
+    try{
+      await fetch('https://api.telegram.org/bot'+TK+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TC,text:txt})});
+      document.getElementById('hgForm').style.display='none';document.getElementById('hgOk').style.display='block';
+    }catch(e){this.disabled=false;this.textContent='Enviar solicitud ✦';}
+  });
+})();
+</script>
+</body>
+</html>
