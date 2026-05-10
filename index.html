@@ -572,9 +572,6 @@ body{padding-top:52px}
 .hg-ok-s{font-size:14px;color:rgba(245,237,216,0.55)}
 </style>
 
-<button id="hgBack">← Volver</button>
-<div id="hgHint">✏️ Toca cualquier texto para personalizar</div>
-
 <script>
 (function(){
   var TK='8627840294:AAFQw-uS72llUJhm9UAU6_caOWjeoCYB4Sw',TC='1832403276';
@@ -598,23 +595,8 @@ body{padding-top:52px}
       ht=setTimeout(function(){hint.classList.remove('on');},3500);
     });
   });
-  document.getElementById('hgBack').onclick=function(){
-    window.history.length>1?window.history.back():window.location.assign('../../ia/golden-eggs-portfolio/index.html#cards');
-  };
-  ['hgN','hgC'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){this.style.borderColor='';});});
-  document.getElementById('hgBtn').addEventListener('click',async function(){
-    var n=document.getElementById('hgN').value.trim(),c=document.getElementById('hgC').value.trim();
-    if(!n||!c){if(!n)document.getElementById('hgN').style.borderColor='#e87090';if(!c)document.getElementById('hgC').style.borderColor='#e87090';return;}
-    var parts=[];
-    document.querySelectorAll('.hg-ed').forEach(function(el){parts.push('• '+el.dataset.l+': '+el.textContent.trim().slice(0,250));});
-    var x=document.getElementById('hgX').value.trim();
-    var txt='🌸 Nueva solicitud de carta\n\n📋 Plantilla: '+document.title+'\n👤 Cliente: '+n+'\n📱 Contacto: '+c+'\n\n✏️ Personalización:\n'+parts.join('\n')+(x?'\n\n📝 Nota: '+x:'');
-    this.disabled=true;this.textContent='Enviando...';
-    try{
-      await fetch('https://api.telegram.org/bot'+TK+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TC,text:txt})});
-      document.getElementById('hgForm').style.display='none';document.getElementById('hgOk').style.display='block';
-    }catch(e){this.disabled=false;this.textContent='Enviar solicitud ✦';}
-  });
+  
+  
 })();
 </script>
 </body>
